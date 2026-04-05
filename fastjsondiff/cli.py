@@ -19,11 +19,15 @@ def load_file(serializer, file_path):
 def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
+    parser.add_argument(
+        "-o", "--operation", choices=("diff", "patch", "unpatch"), default="diff",
+        help="Operation to perform on the input files",
+    )
     parser.add_argument("first")
     parser.add_argument("second")
     parser.add_argument(
         "-s", "--syntax", choices=(fastjsondiff.builtin_syntaxes.keys()), default="compact",
-        help="Diff syntax controls how differences are rendered",
+        help="Diff syntax controls how differences are rendered and applied",
     )
     parser.add_argument(
         "-i", "--indent", action="store", type=int, default=None,
@@ -42,9 +46,18 @@ def main():
     if parsed_first is None or parsed_second is None:
         return 1
 
-    result = fastjsondiff.diff(
-        parsed_first, parsed_second, marshal=True, syntax=args.syntax
-    )
+    if args.operation == "diff":
+        result = fastjsondiff.diff(
+            parsed_first, parsed_second, marshal=True, syntax=args.syntax
+        )
+    elif args.operation == "patch":
+        result = fastjsondiff.patch(
+            parsed_first, parsed_second, marshal=True, syntax=args.syntax
+        )
+    else:
+        result = fastjsondiff.unpatch(
+            parsed_first, parsed_second, marshal=True, syntax=args.syntax
+        )
 
     serializer.serialize_data(result, sys.stdout)
     return 0

@@ -2,5 +2,5 @@ build/
 .pytest_cache/
 .venv/
 .DS_Store
-./hypothesis/
+.hypothesis/
 __pycache__/

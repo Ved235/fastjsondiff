@@ -1523,7 +1523,7 @@ NB_MODULE(module, m) {
         .def("__call__", &YamlLoader::operator(), nb::arg("src"));
 
     nb::class_<Serializer>(m, "Serializer")
-        .def(nb::init<std::string, nb::object>(), nb::arg("file_format"), nb::arg("indent"))
+        .def(nb::init<std::string, nb::object>(), nb::arg("file_format"), nb::arg("indent") = nb::none())
         .def("deserialize_file", &Serializer::deserialize_file, nb::arg("src"))
         .def("serialize_data", &Serializer::serialize_data, nb::arg("obj"), nb::arg("stream"))
         .def_prop_ro("file_format", &Serializer::file_format);
