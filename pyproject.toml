@@ -17,7 +17,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Ved235/fastjsondiff"
+Homepage = "https://github.com/Ved235/cjsondiff"
 
 [project.scripts]
 cjsondiff = "cjsondiff.cli:main"
